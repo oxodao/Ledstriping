@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "ledstrip",
+  "version": "${version}",
+
+  "name": "Led strip mod",
+  "description": "This mod immerses you in the game by controlling a RGB ledstrip",
+  "authors": [
+    "Oxodao"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "GPL-3.0-or-later",
+  "icon": "assets/modid/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [ "fr.oxodao.ledstrip.Ledstrip" ],
+    "modmenu": [ "fr.oxodao.ledstrip.ModMenuIntegration" ]
+  },
+  "mixins": [
+    "ledstrip.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  }
+}

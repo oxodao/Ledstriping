@@ -1,0 +1,4 @@
+{
+  "ListeningUrl": "0.0.0.0:8121",
+  "SerialPort": "/dev/ttyUSB0"
+}
