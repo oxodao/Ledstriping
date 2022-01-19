@@ -1,15 +1,18 @@
 package main
 
 import (
-	"fmt"
+	"flag"
+
 	"github.com/oxodao/ledstrip/config"
 	"github.com/oxodao/ledstrip/services"
 )
 
 func main() {
-	fmt.Println("Ledstrip")
+	configPath := flag.String("config", "", "Path to config file")
 
-	cfg, err := config.Load()
+	flag.Parse()
+
+	cfg, err := config.Load(*configPath)
 	if err != nil {
 		panic(err)
 	}
