@@ -243,7 +243,7 @@ void process_command() {
   //#region Color
   if (strcmp(cmd, "c") == 0) {
     // meh, doesnt work otherwise for some reason
-    char str[5 ];
+    char str[5];
     snprintf(str, 5, "0x%02X", ws2812fx.getColor() >> 16);
     Serial.print(str);
     char str2[5];

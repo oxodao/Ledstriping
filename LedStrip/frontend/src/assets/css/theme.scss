@@ -1,0 +1,9 @@
+:root {
+    --main-bg-color: #231942;
+    --main-fg-color: #ff9bd4;
+
+    --darker-bg-color: #{darken(#231942, 5)};
+
+    --list-item-bg-color: #{lighten(#231942, 5)};
+    --list-item-fg-color: #{desaturate(#ff9bd4, 50)};
+}

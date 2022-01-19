@@ -2,11 +2,12 @@ package services
 
 import (
 	"bufio"
-	"errors"
-	"github.com/oxodao/ledstrip/config"
-	"github.com/oxodao/ledstrip/models"
+	"encoding/json"
 	"strings"
 	"time"
+
+	"github.com/oxodao/ledstrip/config"
+	"github.com/oxodao/ledstrip/models"
 
 	"github.com/tarm/serial"
 )
@@ -20,6 +21,16 @@ type Provider struct {
 
 	CurrentState *models.State
 }
+
+/**
+	@TODO Implement a way to map response to its original command
+    Ex: CMD ARG MSG_ID
+	    Resp: MSG_ID OK
+
+	Wait for a certain timeout, if still no answer for the MSG_ID => Consider failed
+
+	This will fix 500s when going too fast in the UI
+**/
 
 func (p *Provider) ReadLine() string {
 	p.scanner.Scan()
@@ -50,21 +61,17 @@ func (p *Provider) ExecuteCommandBoolean(command string) bool {
 }
 
 func (p *Provider) loadInitialState() (*models.State, error) {
-	color, err := p.ExecuteCommand("c")
-	brightness, err2 := p.ExecuteCommand("b")
-	mode, err3 := p.ExecuteCommand("m")
-	speed, err4 := p.ExecuteCommand("s")
-
-	if err != nil || err2 != nil || err3 != nil || err4 != nil {
-		return nil, errors.New("something went wrong reading initial state")
-	}
-
-	state, err := models.NewState(mode, brightness, speed, color)
+	stt, err := p.ExecuteCommand("state")
 	if err != nil {
-		return nil, errors.New("something went wrong parsing the state")
+		return nil, err
 	}
 
-	return state, nil
+	state := models.State{}
+	err = json.Unmarshal([]byte(stt), &state)
+
+	state.CleanColor()
+
+	return &state, err
 }
 
 func NewProvider(cfg *config.Config) (*Provider, error) {
@@ -80,7 +87,7 @@ func NewProvider(cfg *config.Config) (*Provider, error) {
 	}
 
 	prv := &Provider{
-		Config: cfg,
+		Config:       cfg,
 		SerialConfig: c,
 		Port:         s,
 		scanner:      bufio.NewScanner(s),

@@ -1,20 +1,20 @@
-import React              from 'react';
-import ReactDOM           from 'react-dom';
-import App                                from './App';
-import {createMuiTheme, MuiThemeProvider} from "@material-ui/core";
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import './assets/css/index.scss';
+import ColorSelector from './components/ColorSelector';
+import ModeSelector from './components/ModeSelector';
+import { BrightnessSelector, SpeedSelector } from './components/Sliders';
+import { StripStateProvider } from './hooks/StripState';
 
 ReactDOM.render(
   <React.StrictMode>
-      <MuiThemeProvider theme={createMuiTheme({
-          palette: {
-              type: 'dark',
-              primary: {
-                main: '#2d7c9d'
-              },
-          },
-      })}>
-        <App />
-      </MuiThemeProvider>
+    <StripStateProvider>
+      <ColorSelector />
+      <BrightnessSelector />
+      <SpeedSelector />
+      <ModeSelector />
+    </StripStateProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

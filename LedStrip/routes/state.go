@@ -3,8 +3,10 @@ package routes
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/oxodao/ledstrip/services"
 	"net/http"
+
+	"github.com/oxodao/ledstrip/models"
+	"github.com/oxodao/ledstrip/services"
 )
 
 func state(prv *services.Provider) http.HandlerFunc {
@@ -15,7 +17,14 @@ func state(prv *services.Provider) http.HandlerFunc {
 			return
 		}
 
-		_, _ = w.Write([]byte(state))
+		model := models.State{}
+		err = json.Unmarshal([]byte(state), &model)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+
+		_, _ = w.Write(model.Json())
 	}
 }
 
@@ -50,10 +59,10 @@ func debug(prv *services.Provider) http.HandlerFunc {
 
 		str, _ := json.Marshal(struct {
 			PreviousState map[string]json.RawMessage
-			CurrentState map[string]json.RawMessage
+			CurrentState  map[string]json.RawMessage
 		}{
 			PreviousState: obj,
-			CurrentState: obj2,
+			CurrentState:  obj2,
 		})
 
 		_, _ = w.Write(str)

@@ -1,0 +1,23 @@
+.Item {
+    width: 100%;
+
+    border-radius: .25em;
+
+    padding: .5em;
+
+    color: var(--list-item-fg-color);
+
+    cursor: pointer;
+
+    &.selected {
+        background: var(--list-item-bg-color);
+        color: var(--main-fg-color);
+    }
+}
+
+.list {
+    max-height: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
