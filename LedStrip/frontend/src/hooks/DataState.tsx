@@ -1,8 +1,10 @@
-import { json } from "body-parser"
 import React, { useContext, useEffect, useState } from "react"
+
+const APP_NAME = 'ledstrip-web-ui'
 
 export type Favorite = {
     ID?: string
+    App?: string
     Name: string
     Color: string
     Brightness: number
@@ -32,18 +34,20 @@ const initialState: DataState = {
 
 const DataStateContext = React.createContext<DataStateCtx>({
     ...initialState,
-    refresh: () => {},
-    addFavorite: () => {},
-    setCurrentName: () => {},
+    refresh: () => { },
+    addFavorite: () => { },
+    setCurrentName: () => { },
 })
 
-export function DataStateProvider({children}: {children: React.ReactNode}) {
+export function DataStateProvider({ children }: { children: React.ReactNode }) {
     const [state, setState] = useState<DataState>(initialState)
 
     const refresh = () => {
         const func = async () => {
             const resp = await fetch('/api/data')
             const json = await resp.json()
+
+            json['Favorites'] = json['Favorites'].filter((i: Favorite) => i.App === APP_NAME)
 
             setState(json)
         }
@@ -52,7 +56,7 @@ export function DataStateProvider({children}: {children: React.ReactNode}) {
     }
 
     const setCurrentName = (currentName: string) => {
-        setState({...state, currentName})
+        setState({ ...state, currentName })
     }
 
     const addFavorite = async (obj: Favorite) => {
@@ -60,13 +64,15 @@ export function DataStateProvider({children}: {children: React.ReactNode}) {
             return
         }
 
+        obj.App = APP_NAME;
+
         await fetch('/api/favorite', {
             method: 'POST',
             body: JSON.stringify(obj)
         })
         await refresh()
 
-        setState({...state, currentName: ''})
+        setState({ ...state, currentName: '' })
     }
 
     useEffect(() => {

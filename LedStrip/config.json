@@ -4,6 +4,7 @@
   "Favorites": [
     {
       "ID": "97f9f508-ae17-426c-98d2-46e5570ced0f",
+      "App": "ledstrip-web-ui",
       "Name": "Chill",
       "Color": "#FFFFFF",
       "Brightness": 80,
@@ -12,10 +13,20 @@
     },
     {
       "ID": "2310b7e5-794d-4efe-adba-e1bb7f87601a",
+      "App": "",
       "Name": "test",
       "Color": "#b01919",
       "Brightness": 107,
       "Speed": 1500,
+      "Mode": 0
+    },
+    {
+      "ID": "d4887326-0d1c-4c2f-a67d-c9e02cb60858",
+      "App": "ledstrip-web-ui",
+      "Name": "Test2",
+      "Color": "#ac3939",
+      "Brightness": 142,
+      "Speed": 4000,
       "Mode": 0
     }
   ]

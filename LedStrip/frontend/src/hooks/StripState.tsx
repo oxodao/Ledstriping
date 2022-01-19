@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react"
+import { Favorite } from "./DataState";
 
 export type StripNumberProp = 'Brightness' | 'Speed'
 export type StripProp = 'Color' | 'Mode' | 'Brightness' | 'Speed';
@@ -12,7 +13,7 @@ export type StripState = {
 
 export type StripStateCtx = StripState & {
     setValue: (prop: StripProp, val: any) => void;
-    useFavorite: (id: string) => void;
+    useFavorite: (id: Favorite) => void;
 }
 
 const initialState: StripState = {
@@ -55,8 +56,15 @@ export function StripStateProvider({children}: {children: React.ReactNode}) {
         })
     }
 
-    const useFavorite = (id: string) => {
-        fetch('/api/favorite/' + id)
+    const useFavorite = (favorite: Favorite) => {
+        fetch('/api/favorite/' + favorite.ID)
+        setState({
+            ...state,
+            Color: favorite.Color,
+            Brightness: favorite.Brightness,
+            Mode: favorite.Mode,
+            Speed: favorite.Mode,
+        })
     }
 
     return <StripStateContext.Provider value={{

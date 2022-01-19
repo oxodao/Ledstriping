@@ -2,6 +2,7 @@ package models
 
 type Favorite struct {
 	ID         string
+	App        string
 	Name       string
 	Color      string
 	Brightness uint64

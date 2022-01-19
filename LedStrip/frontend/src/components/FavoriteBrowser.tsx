@@ -30,7 +30,7 @@ export default function FavoriteBrowser() {
                     <ListItem
                         key={i}
                         text={val.Name}
-                        action={() => strip.useFavorite(val.ID ?? '')}
+                        action={() => strip.useFavorite(val)}
                         editAction={() => { console.log("Edit " + val.Name) }}
                         deleteAction={() => { console.log("Delete " + val.Name) }}
                     />
