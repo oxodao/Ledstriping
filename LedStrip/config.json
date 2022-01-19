@@ -1,4 +1,22 @@
 {
   "ListeningUrl": "0.0.0.0:8121",
-  "SerialPort": "/dev/ttyUSB0"
+  "SerialPort": "/dev/ttyUSB0",
+  "Favorites": [
+    {
+      "ID": "97f9f508-ae17-426c-98d2-46e5570ced0f",
+      "Name": "Chill",
+      "Color": "#FFFFFF",
+      "Brightness": 80,
+      "Speed": 100,
+      "Mode": 12
+    },
+    {
+      "ID": "2310b7e5-794d-4efe-adba-e1bb7f87601a",
+      "Name": "test",
+      "Color": "#b01919",
+      "Brightness": 107,
+      "Speed": 1500,
+      "Mode": 0
+    }
+  ]
 }

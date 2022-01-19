@@ -1,23 +1,35 @@
 .Item {
-    width: 100%;
+  width: 100%;
 
-    border-radius: .25em;
+  border-radius: 0.25em;
 
-    padding: .5em;
+  padding: 0.5em;
 
-    color: var(--list-item-fg-color);
+  color: var(--list-item-fg-color);
 
+  display: flex;
+
+  &.selected {
+    background: var(--list-item-bg-color);
+    color: var(--main-fg-color);
+  }
+
+  span {
+    flex: 1;
     cursor: pointer;
+  }
 
-    &.selected {
-        background: var(--list-item-bg-color);
-        color: var(--main-fg-color);
-    }
+  svg {
+    margin: 0 0.5em 0 0.5em;
+    cursor: pointer;
+  }
 }
 
 .list {
-    max-height: 100%;
-    padding: 0;
-    margin: 0;
-    list-style: none;
+  max-height: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+  flex: 1;
 }

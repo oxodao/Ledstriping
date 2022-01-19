@@ -1,0 +1,27 @@
+.Add {
+    display: flex;
+    width: 100%;
+
+    align-items: center;
+    justify-content: center;
+
+    &__Field {
+        flex: 1;
+
+        // Stolen from https://codepen.io/Godex/pen/ByGam
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        padding: 8px 12px 10px 12px;
+        background: rgba(0, 0, 0, 0.25);
+        font-size: 100%;
+        color: var(--main-fg-color);
+
+        &::-moz-focus-inner {
+            border: 0;
+            padding: 0;
+        }
+    }
+
+    &__Button {
+        margin: 0 0 0 0.5em;
+    }
+}

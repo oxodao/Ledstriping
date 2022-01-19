@@ -12,6 +12,7 @@ export type StripState = {
 
 export type StripStateCtx = StripState & {
     setValue: (prop: StripProp, val: any) => void;
+    useFavorite: (id: string) => void;
 }
 
 const initialState: StripState = {
@@ -24,13 +25,13 @@ const initialState: StripState = {
 const StripStateContext = React.createContext<StripStateCtx>({
     ...initialState,
 
-    setValue: () => {},
+    setValue: (prop, val) => {},
+    useFavorite: (id) => {},
 })
 
 export function StripStateProvider({children}: {children: React.ReactNode}) {
     const [state, setState] = useState<StripState>(initialState)
 
-    // @TODO: useEffect to fetch initial state
     useEffect(() => {
         const func = async () => {
             const resp = await fetch('/api/state')
@@ -42,7 +43,6 @@ export function StripStateProvider({children}: {children: React.ReactNode}) {
         func()
     }, [])
 
-    // @TODO: handle cors errors 
     const setValue = (prop: StripProp, val: any) => {
         setState({...state, [prop]: val})
 
@@ -55,9 +55,14 @@ export function StripStateProvider({children}: {children: React.ReactNode}) {
         })
     }
 
+    const useFavorite = (id: string) => {
+        fetch('/api/favorite/' + id)
+    }
+
     return <StripStateContext.Provider value={{
         ...state,
         setValue,
+        useFavorite,
     }}>
         {children}
     </StripStateContext.Provider>

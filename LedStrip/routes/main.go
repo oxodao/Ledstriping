@@ -7,8 +7,15 @@ import (
 
 func Register(prv *services.Provider, r *mux.Router) {
 	r.HandleFunc("/state", state(prv))
+	r.HandleFunc("/data", data(prv))
 	r.HandleFunc("/state/debug", debug(prv))
 	r.HandleFunc("/exec", exec(prv))
+
+	// Favorite
+	r.HandleFunc("/favorite/{id}", useFavorite(prv)).Methods("GET")
+	r.HandleFunc("/favorite", createFavorite(prv)).Methods("POST")
+	r.HandleFunc("/favorite/{id}", deleteFavorite(prv)).Methods("DELETE")
+	r.HandleFunc("/favorite/{id}", editFavorite(prv)).Methods("PUT")
 
 	// Colors
 	r.HandleFunc("/color/set", setColor(prv))
