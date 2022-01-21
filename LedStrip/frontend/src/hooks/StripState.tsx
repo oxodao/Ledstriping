@@ -8,7 +8,7 @@ export type StripState = {
     Color: string
     Brightness: number
     Speed: number
-    Mode: number
+    Mode: string
 }
 
 export type StripStateCtx = StripState & {
@@ -20,7 +20,7 @@ const initialState: StripState = {
     Color: 'FFFFFF',
     Brightness: 255,
     Speed: 1000,
-    Mode: 0,
+    Mode: "Static",
 }
 
 const StripStateContext = React.createContext<StripStateCtx>({
@@ -63,7 +63,7 @@ export function StripStateProvider({children}: {children: React.ReactNode}) {
             Color: favorite.Color,
             Brightness: favorite.Brightness,
             Mode: favorite.Mode,
-            Speed: favorite.Mode,
+            Speed: favorite.Speed,
         })
     }
 

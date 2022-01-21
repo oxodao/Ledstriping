@@ -2,13 +2,11 @@ package routes
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
 	"github.com/oxodao/ledstrip/models"
 	"github.com/oxodao/ledstrip/services"
-	"github.com/oxodao/ledstrip/utils"
 
 	"github.com/google/uuid"
 )
@@ -23,10 +21,11 @@ func useFavorite(prv *services.Provider) http.HandlerFunc {
 				continue
 			}
 
-			prv.ExecuteCommand(fmt.Sprintf("c %v", utils.GetBoardFromHex(f.Color)))
-			prv.ExecuteCommand(fmt.Sprintf("b %v", f.Brightness))
-			prv.ExecuteCommand(fmt.Sprintf("m %v", f.Mode))
-			prv.ExecuteCommand(fmt.Sprintf("s %v", f.Speed))
+			if err := prv.Ledstrip.SetState(f.Color, f.Brightness, f.Mode, f.Speed); err != nil {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(err.Error()))
+				return
+			}
 
 			found = true
 		}

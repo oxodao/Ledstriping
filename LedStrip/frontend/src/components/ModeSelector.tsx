@@ -12,7 +12,7 @@ export default function ModeSelector() {
     return <Card title="Mode">
         <ul className="list">
             {
-                data.Modes.map((val, i) => <ListItem key={i} text={val} selected={strip.Mode === i} action={() => strip.setValue('Mode', i)}/>)
+                data.Modes.map((val) => <ListItem key={val} text={val} selected={strip.Mode === val} action={() => strip.setValue('Mode', val)}/>)
             }
         </ul>
     </Card>

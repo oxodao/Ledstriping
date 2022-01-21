@@ -8,7 +8,6 @@ import (
 func Register(prv *services.Provider, r *mux.Router) {
 	r.HandleFunc("/state", state(prv))
 	r.HandleFunc("/data", data(prv))
-	r.HandleFunc("/state/debug", debug(prv))
 	r.HandleFunc("/exec", exec(prv))
 
 	// Favorite

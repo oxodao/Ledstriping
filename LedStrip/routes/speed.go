@@ -1,9 +1,10 @@
 package routes
 
 import (
-	"github.com/oxodao/ledstrip/services"
 	"net/http"
 	"strconv"
+
+	"github.com/oxodao/ledstrip/services"
 )
 
 func setSpeed(prv *services.Provider) http.HandlerFunc {
@@ -14,17 +15,17 @@ func setSpeed(prv *services.Provider) http.HandlerFunc {
 			return
 		}
 
-		if !prv.ExecuteCommandBoolean("s " + speed) {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-
 		speedInt, err := strconv.ParseUint(speed, 10, 64)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 
-		prv.CurrentState.Brightness = speedInt
+		if err = prv.Ledstrip.Speed.Set(speedInt); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error()))
+			return
+		}
+
 	}
 }

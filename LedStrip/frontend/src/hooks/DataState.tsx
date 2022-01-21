@@ -8,7 +8,7 @@ export type Favorite = {
     Name: string
     Color: string
     Brightness: number
-    Mode: number
+    Mode: string
     Speed: number
 }
 

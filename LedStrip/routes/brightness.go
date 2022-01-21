@@ -1,9 +1,10 @@
 package routes
 
 import (
-	"github.com/oxodao/ledstrip/services"
 	"net/http"
 	"strconv"
+
+	"github.com/oxodao/ledstrip/services"
 )
 
 func setBrightness(prv *services.Provider) http.HandlerFunc {
@@ -14,24 +15,23 @@ func setBrightness(prv *services.Provider) http.HandlerFunc {
 			return
 		}
 
-		if !prv.ExecuteCommandBoolean("b " + brightness) {
-			w.WriteHeader(http.StatusInternalServerError)
+		brightnessInt, err := strconv.ParseUint(brightness, 10, 64)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
 
-		brightnessInt, err := strconv.ParseUint(brightness, 10, 64)
+		err = prv.Ledstrip.Brightness.Set(brightnessInt)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-
-		prv.CurrentState.Brightness = brightnessInt
 	}
 }
 
 func fadeIn(prv *services.Provider) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if !prv.ExecuteCommandBoolean("fadein") {
+		if prv.Ledstrip.Brightness.FadeIn() != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
 	}
@@ -39,7 +39,7 @@ func fadeIn(prv *services.Provider) http.HandlerFunc {
 
 func fadeOut(prv *services.Provider) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if !prv.ExecuteCommandBoolean("fadeout") {
+		if prv.Ledstrip.Brightness.FadeOut() != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 		}
 	}

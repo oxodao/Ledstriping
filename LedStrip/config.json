@@ -9,16 +9,7 @@
       "Color": "#FFFFFF",
       "Brightness": 80,
       "Speed": 100,
-      "Mode": 12
-    },
-    {
-      "ID": "2310b7e5-794d-4efe-adba-e1bb7f87601a",
-      "App": "",
-      "Name": "test",
-      "Color": "#b01919",
-      "Brightness": 107,
-      "Speed": 1500,
-      "Mode": 0
+      "Mode": "Rainbow Cycle"
     },
     {
       "ID": "d4887326-0d1c-4c2f-a67d-c9e02cb60858",
@@ -27,7 +18,7 @@
       "Color": "#ac3939",
       "Brightness": 142,
       "Speed": 4000,
-      "Mode": 0
+      "Mode": "Static"
     }
   ]
 }

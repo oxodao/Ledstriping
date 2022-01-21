@@ -1,9 +1,9 @@
 package routes
 
 import (
-	"github.com/oxodao/ledstrip/services"
 	"net/http"
-	"strconv"
+
+	"github.com/oxodao/ledstrip/services"
 )
 
 func setMode(prv *services.Provider) http.HandlerFunc {
@@ -14,17 +14,10 @@ func setMode(prv *services.Provider) http.HandlerFunc {
 			return
 		}
 
-		if !prv.ExecuteCommandBoolean("m " + mode) {
+		if err := prv.Ledstrip.Mode.Set(mode); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error()))
 			return
 		}
-
-		modeInt, err := strconv.ParseUint(mode, 10, 64)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-
-		prv.CurrentState.Brightness = modeInt
 	}
 }

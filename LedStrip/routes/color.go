@@ -1,9 +1,9 @@
 package routes
 
 import (
-	"github.com/oxodao/ledstrip/services"
-	"github.com/oxodao/ledstrip/utils"
 	"net/http"
+
+	"github.com/oxodao/ledstrip/services"
 )
 
 func setColor(prv *services.Provider) http.HandlerFunc {
@@ -14,12 +14,10 @@ func setColor(prv *services.Provider) http.HandlerFunc {
 			return
 		}
 
-		if !prv.ExecuteCommandBoolean("c " + utils.GetBoardFromHex(color)) {
+		if prv.Ledstrip.Color.Set(color) != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-
-		prv.CurrentState.Color = color
 	}
 }
 
@@ -32,7 +30,10 @@ func spark(prv *services.Provider) http.HandlerFunc {
 			return
 		}
 
-		_, _ = prv.ExecuteCommand("d " + duration)
-		_, _ = prv.ExecuteCommand("sp " + utils.GetBoardFromHex(color))
+		err := prv.Ledstrip.Color.Spark(color, duration)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 }

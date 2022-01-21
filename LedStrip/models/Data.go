@@ -7,7 +7,7 @@ type Favorite struct {
 	Color      string
 	Brightness uint64
 	Speed      uint64
-	Mode       uint64
+	Mode       string
 }
 
 type Data struct {
