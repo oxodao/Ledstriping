@@ -26,10 +26,10 @@ type State struct {
 	ls            *Ledstrip     `json:"-"`
 	stateInternal stateInternal `json:"-"`
 
-	Mode       string `json:"mode"`
-	Brightness uint64 `json:"brightness"`
-	Speed      uint64 `json:"speed"`
-	Color      string `json:"color"`
+	Mode       string `json:"Mode"`
+	Brightness uint64 `json:"Brightness"`
+	Speed      uint64 `json:"Speed"`
+	Color      string `json:"Color"`
 }
 
 func (s *State) updateFromInternal() {

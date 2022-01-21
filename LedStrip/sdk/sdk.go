@@ -2,8 +2,8 @@ package sdk
 
 import (
 	"bufio"
-	"fmt"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/tarm/serial"
@@ -20,6 +20,8 @@ type Ledstrip struct {
 	Color      *Color
 	Mode       *Mode
 	Speed      *Speed
+
+	cmdMutex sync.Mutex
 }
 
 func Connect(port string) (*Ledstrip, error) {
@@ -61,15 +63,19 @@ func (ls *Ledstrip) readLine() string {
 }
 
 func (ls *Ledstrip) ExecuteCommand(command string) (string, error) {
+	ls.cmdMutex.Lock()
+
 	command = strings.Trim(command, " \t\n\r")
-	fmt.Println(ls)
-	fmt.Println(ls.serialPort)
 	_, err := ls.serialPort.Write([]byte(command + "\n"))
 	if err != nil {
 		return "", err
 	}
 
-	return ls.readLine(), nil
+	resp := ls.readLine()
+
+	ls.cmdMutex.Unlock()
+
+	return resp, nil
 }
 
 func (ls *Ledstrip) ExecuteCommandBoolean(command string) bool {

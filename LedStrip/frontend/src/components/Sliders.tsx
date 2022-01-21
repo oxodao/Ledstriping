@@ -16,6 +16,8 @@ type SliderCardProps = {
 export default function SliderCard({title, prop, valueCalculator, min, max, step}: SliderCardProps) {
     const strip = useLedStrip();
 
+    console.log(prop, strip)
+
     return <Card title={title} className="Slider">
         <h2>{valueCalculator(strip[prop])}</h2>
         <Slider
@@ -32,7 +34,13 @@ export default function SliderCard({title, prop, valueCalculator, min, max, step
 }
 
 export function BrightnessSelector() {
-    return <SliderCard title="Brightness" min={0} max={255} prop="Brightness" valueCalculator={(val) => Math.floor(val / 255 * 100) + "%"}/>
+    return <SliderCard title="Brightness" min={0} max={255} prop="Brightness" valueCalculator={(val) => {
+        console.log(val);
+        console.log(val/255);
+        console.log(val/255*100);
+        console.log(Math.floor(val/255*100));
+        return Math.floor(val / 255 * 100) + "%";
+    }}/>
 }
 
 export function SpeedSelector() {
