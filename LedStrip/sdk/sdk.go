@@ -2,6 +2,7 @@ package sdk
 
 import (
 	"bufio"
+	"fmt"
 	"strings"
 	"sync"
 	"time"
@@ -48,9 +49,15 @@ func Connect(port string) (*Ledstrip, error) {
 	ls.Speed = &Speed{ls}
 	ls.State = &State{ls: ls}
 
-	err = ls.State.Fetch()
-	if err != nil {
-		return nil, err
+	foundState := false
+	for !foundState {
+		err = ls.State.Fetch()
+		if err != nil {
+			fmt.Println("Error fetching state:", err)
+			time.Sleep(3 * time.Second)
+		} else {
+			foundState = true
+		}
 	}
 
 	return ls, nil
